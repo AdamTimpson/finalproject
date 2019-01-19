@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewRouteActivity"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/newRouteHeader"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/chosenDestinations"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/chosenDestinations"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+            <Button
+                android:id="@+id/startRouteButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/startRouteButton"
+                android:background="@drawable/custom_button_background"
+                android:layout_marginEnd="4dp"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/clearRouteButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/clearRouteButton"
+                android:background="@drawable/custom_button_background"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/destinationsLabel"/>
+
+        <ListView
+            android:id="@+id/destinationsList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

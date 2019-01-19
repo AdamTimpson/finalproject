@@ -1,0 +1,24 @@
+<resources>
+    <!--App Info-->
+    <string name="app_name">MobilityAid</string>
+
+    <!--Headers-->
+    <string name="loginHeader">Enter your login details...</string>
+    <string name="newRouteHeader">Create a new route...</string>
+
+    <!--Labels-->
+    <string name="emailETLabel">Email: </string>
+    <string name="passwordETLabel">Password: </string>
+    <string name="destinationsLabel">Choose your destinations: </string>
+    <string name="chosenDestinations">Current destinations: </string>
+
+    <!--Buttons-->
+    <string name="loginButton">Login</string>
+    <string name="startRouteButton">Start Route</string>
+    <string name="clearRouteButton">Clear Route</string>
+    <string name="myInterestsButton">Set Interests</string>
+    <string name="newRouteButton">Plan A New Route</string>
+    <string name="helpButton">View Help</string>
+    <string name="title_activity_maps">Map</string>
+
+</resources>
