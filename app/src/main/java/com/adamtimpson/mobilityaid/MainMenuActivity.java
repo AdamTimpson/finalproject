@@ -10,6 +10,7 @@ import android.widget.Toast;
 public class MainMenuActivity extends AppCompatActivity {
 
     Button setInterestsButton;
+    Button setWalkingDistanceButton;
     Button newRouteButton;
     Button helpButton;
 
@@ -23,6 +24,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void initClickListeners() {
         initSetInterestsListener();
+        initSetWalkingDistance();
         initNewRouteListener();
         initHelpListener();
     }
@@ -30,6 +32,17 @@ public class MainMenuActivity extends AppCompatActivity {
     private void initSetInterestsListener() {
         setInterestsButton = findViewById(R.id.myInterestsButton);
         setInterestsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Add functionality here
+                Toast.makeText(MainMenuActivity.this, "TODO", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void initSetWalkingDistance() {
+        setWalkingDistanceButton = findViewById(R.id.setDistanceButton);
+        setWalkingDistanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO: Add functionality here

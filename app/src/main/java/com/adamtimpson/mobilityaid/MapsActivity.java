@@ -103,7 +103,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 LatLng currentLatLng = new LatLng(currentLat, currentLong);
 
-                mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Your Current Location"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
@@ -113,13 +112,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void geoLocate() {
-        String searchString = selectedPlaces.get(0);
+        for(int i = 0; i < selectedPlaces.size(); i++) {
+            sendVolleyRequest(selectedPlaces.get(i));
+        }
+    }
 
+    private void sendVolleyRequest(final String searchString) {
         Log.d("[DEBUG]", searchString);
 
         String key = "AIzaSyBjrZuM98cB5tjaITTc5LBRuZXez6cY6H0";
         String latLngString = "" + _currentLatLng.latitude + "," + _currentLatLng.longitude;
-        String radiusString = "5000";
+        String radiusString = "5000"; // metres
         String urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + latLngString + "&radius=" + radiusString + "&type=" + searchString + "&key=" + key;
 
         Log.d("[DEBUG]", "URL: " + urlString);
@@ -145,12 +148,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     Log.d("[DEBUG]", markerLatLng.toString());
 
-                    MarkerOptions options;
-                    options = new MarkerOptions();
-                    options.position(markerLatLng);
-                    options.title("TEST");
+                    addMarker(markerLatLng, geo.getString("name"));
 
-                    mMap.addMarker(options);
                 } catch(Exception e) {
                     Log.d("[DEBUG]", e.getMessage());
                 }
@@ -165,37 +164,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         requestQueue.add(stringRequest);
     }
 
-    private void sendVolleyRequest() {
-        requestQueue = Volley.newRequestQueue(this);
+    private void addMarker(LatLng markerLatLng, String title) {
+        MarkerOptions options;
+        options = new MarkerOptions();
+        options.position(markerLatLng);
+        options.title(title);
 
-        stringRequest = new StringRequest(Request.Method.GET, urlString, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    jsonResponse = new JSONObject(response);
-
-                    JSONArray results = jsonResponse.getJSONArray("results");
-
-                    JSONObject geo;
-                    JSONObject location;
-
-                    geo = results.getJSONObject(0);
-                    location = geo.getJSONObject("geometry").getJSONObject("location");
-
-                    LatLng markerLatLng = new LatLng(Double.parseDouble(location.get("lat").toString()), Double.parseDouble(location.get("lng").toString()));
-
-                    Log.d("[DEBUG]", markerLatLng.toString());
-
-                    MarkerOptions options;
-                    options = new MarkerOptions();
-                    options.position(markerLatLng);
-                    options.title("TEST");
-
-                    mMap.addMarker(options);
-                } catch(Exception e) {
-                    Log.d("[DEBUG]", e.getMessage());
-                }
-            }
+        mMap.addMarker(options);
     }
 
     @Override
