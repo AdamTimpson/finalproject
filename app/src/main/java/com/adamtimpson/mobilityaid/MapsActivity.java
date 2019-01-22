@@ -12,7 +12,12 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.adamtimpson.mobilityaid.directionhelpers.FetchURL;
+import com.adamtimpson.mobilityaid.directionhelpers.TaskLoadedCallback;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,6 +31,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,15 +40,24 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener, TaskLoadedCallback {
 
     private static final int MY_REQUEST_INT = 177; // 177 because why not...
+
+    private String key = "AIzaSyBjrZuM98cB5tjaITTc5LBRuZXez6cY6H0";
+
+    private Integer currentIndex = 0;
+    private Integer nextIndex = 1;
+
+    private Button nextPointButton;
 
     private GoogleMap mMap;
 
     private LocationManager locationManager;
 
     private ArrayList<String> selectedPlaces = NewRouteActivity.getSelectedPlaces();
+
+    private ArrayList<LatLng> allMarkerLatLngArray = new ArrayList<>();
 
     private LatLng _currentLatLng;
 
@@ -51,12 +67,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private JSONObject jsonResponse;
 
+    private Polyline currentPolyline;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("[DEBUG] ", Arrays.toString(selectedPlaces.toArray()));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        initNextPointButton();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -102,7 +122,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 _currentLatLng = new LatLng(currentLat, currentLong);
 
                 LatLng currentLatLng = new LatLng(currentLat, currentLong);
+                allMarkerLatLngArray.add(currentLatLng);
 
+                mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Starting Location"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
@@ -120,7 +142,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void sendVolleyRequest(final String searchString) {
         Log.d("[DEBUG]", searchString);
 
-        String key = "AIzaSyBjrZuM98cB5tjaITTc5LBRuZXez6cY6H0";
         String latLngString = "" + _currentLatLng.latitude + "," + _currentLatLng.longitude;
         String radiusString = "5000"; // metres
         String urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + latLngString + "&radius=" + radiusString + "&type=" + searchString + "&key=" + key;
@@ -149,6 +170,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.d("[DEBUG]", markerLatLng.toString());
 
                     addMarker(markerLatLng, geo.getString("name"));
+                    allMarkerLatLngArray.add(markerLatLng);
 
                 } catch(Exception e) {
                     Log.d("[DEBUG]", e.getMessage());
@@ -173,6 +195,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(options);
     }
 
+    private String getDirectionsUrl(LatLng origin, LatLng destination) {
+        String originString = "origin=" + origin.latitude + "," + origin.longitude;
+
+        String destinationString = "destination=" + destination.latitude + "," + destination.longitude;
+
+        String urlParameters = originString + "&" + destinationString + "&walking";
+
+        String url = "https://maps.googleapis.com/maps/api/directions/json" + "?" + urlParameters + "&key=" + key;
+
+        return url;
+
+    }
+
+    private void initNextPointButton() {
+        nextPointButton = findViewById(R.id.nextPointButton);
+        nextPointButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("[DEBUG]", getDirectionsUrl(allMarkerLatLngArray.get(0), allMarkerLatLngArray.get(1)));
+
+                if((currentIndex >= 0 && nextIndex < allMarkerLatLngArray.size()))   {
+                    new FetchURL(MapsActivity.this).execute(getDirectionsUrl(allMarkerLatLngArray.get(currentIndex), allMarkerLatLngArray.get(nextIndex)), "walking");
+
+                    currentIndex++;
+                    nextIndex++;
+                } else {
+                    Toast.makeText(MapsActivity.this, "You have no more destinations planned", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -194,5 +248,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        if(currentPolyline != null) currentPolyline.remove();
+
+        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
     }
 }

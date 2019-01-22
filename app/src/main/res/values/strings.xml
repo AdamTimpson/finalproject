@@ -21,5 +21,6 @@
     <string name="newRouteButton">Plan A New Route</string>
     <string name="helpButton">View Help</string>
     <string name="title_activity_maps">Map</string>
+    <string name="nextPointButton">Next Destination</string>
 
 </resources>
