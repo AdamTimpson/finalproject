@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private final String LOGIN_FAIL_MESSAGE = "Login failed";
 
     Button loginButton;
+    Button clearButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initLoginButtonListener() {
         loginButton = findViewById(R.id.loginButton);
+        clearButton = findViewById(R.id.loginClearButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, LOGIN_FAIL_MESSAGE, Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((EditText) findViewById(R.id.emailInput)).setText("");
+                ((EditText) findViewById(R.id.passwordInput)).setText("");
             }
         });
     }

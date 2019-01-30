@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/clearRouteButton"
-                android:background="@drawable/custom_button_background"
+                android:background="@drawable/custom_button_background_grey"
                 android:layout_marginStart="4dp"
                 android:textColor="@color/white"/>
         </LinearLayout>

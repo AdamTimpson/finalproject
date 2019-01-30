@@ -48,6 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private Integer currentIndex = 0;
     private Integer nextIndex = 1;
+    private Integer zoomMagnification = 14;
 
     private Button nextPointButton;
 
@@ -230,7 +231,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, zoomMagnification);
         mMap.animateCamera(cameraUpdate);
         locationManager.removeUpdates(this);
     }
