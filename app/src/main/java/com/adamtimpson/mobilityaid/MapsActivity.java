@@ -211,6 +211,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void initNextPointButton() {
         nextPointButton = findViewById(R.id.nextPointButton);
+
         nextPointButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -18,7 +18,7 @@
     <string name="startRouteButton">Start Route</string>
     <string name="setDistanceButton">Set Walking Distance</string>
     <string name="clearRouteButton">Clear Route</string>
-    <string name="myInterestsButton">Set Interests</string>
+    <string name="myInterestsButton">Set Preferences</string>
     <string name="newRouteButton">Plan A New Route</string>
     <string name="helpButton">View Help</string>
     <string name="title_activity_maps">Map</string>
