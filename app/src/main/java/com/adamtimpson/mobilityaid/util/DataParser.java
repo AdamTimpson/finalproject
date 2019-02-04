@@ -1,4 +1,4 @@
-package com.adamtimpson.mobilityaid.directionhelpers;
+package com.adamtimpson.mobilityaid.util;
 
 import com.google.android.gms.maps.model.LatLng;
 

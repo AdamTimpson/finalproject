@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.adamtimpson.mobilityaid.util.VoiceUtils;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -74,7 +76,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK && null != data) {
                     ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     processVoiceCommand(results.get(0));
-//                    Toast.makeText(MainMenuActivity.this, result.get(0), Toast.LENGTH_LONG).show();
                 }
 
                 break;
@@ -83,11 +84,11 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void processVoiceCommand(String cmd) {
-        if(cmd.equalsIgnoreCase("plan a new route")) {
+        if(cmd.equalsIgnoreCase(VoiceUtils.NEW_ROUTE)) {
             Intent newRouteIntent = new Intent(this.getBaseContext(), NewRouteActivity.class);
             startActivity(newRouteIntent);
         } else {
-            Toast.makeText(MainMenuActivity.this, "Sorry, '" + cmd + "' is an invalid command!", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainMenuActivity.this, VoiceUtils.getError(cmd), Toast.LENGTH_LONG).show();
 
         }
     }

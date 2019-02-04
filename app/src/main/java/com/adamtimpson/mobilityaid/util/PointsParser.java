@@ -1,4 +1,4 @@
-package com.adamtimpson.mobilityaid.directionhelpers;
+package com.adamtimpson.mobilityaid.util;
 
 import android.content.Context;
 import android.graphics.Color;

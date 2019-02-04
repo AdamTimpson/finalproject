@@ -16,8 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.adamtimpson.mobilityaid.directionhelpers.FetchURL;
-import com.adamtimpson.mobilityaid.directionhelpers.TaskLoadedCallback;
+import com.adamtimpson.mobilityaid.util.FetchURL;
+import com.adamtimpson.mobilityaid.util.TaskLoadedCallback;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;

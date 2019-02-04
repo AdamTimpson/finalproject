@@ -1,4 +1,4 @@
-package com.adamtimpson.mobilityaid.directionhelpers;
+package com.adamtimpson.mobilityaid.util;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -12,8 +12,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class FetchURL extends AsyncTask<String, Void, String> {
-    Context mContext;
-    String directionMode = "driving";
+    protected Context mContext;
+    private String directionMode = "driving";
 
     public FetchURL(Context mContext) {
         this.mContext = mContext;
