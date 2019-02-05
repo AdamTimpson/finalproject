@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.adamtimpson.mobilityaid.util.ActivityUtils;
 import com.adamtimpson.mobilityaid.util.VoiceUtils;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ import java.util.Locale;
 public class MainMenuActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
+
+    private ActivityUtils activityUtils = new ActivityUtils(this);
 
     Button setInterestsButton;
     Button setWalkingDistanceButton;
@@ -85,8 +88,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void processVoiceCommand(String cmd) {
         if(cmd.equalsIgnoreCase(VoiceUtils.NEW_ROUTE)) {
-            Intent newRouteIntent = new Intent(this.getBaseContext(), NewRouteActivity.class);
-            startActivity(newRouteIntent);
+            activityUtils.moveToNewRoute();
         } else {
             Toast.makeText(MainMenuActivity.this, VoiceUtils.getError(cmd), Toast.LENGTH_LONG).show();
 
@@ -105,8 +107,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setInterestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Add functionality here
-                Toast.makeText(MainMenuActivity.this, "TODO", Toast.LENGTH_LONG).show();
+                activityUtils.moveToSetInterests();
             }
         });
     }
@@ -116,8 +117,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setWalkingDistanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Add functionality here
-                Toast.makeText(MainMenuActivity.this, "TODO", Toast.LENGTH_LONG).show();
+                activityUtils.moveToSetWalkingDistance();
             }
         });
     }
@@ -127,8 +127,7 @@ public class MainMenuActivity extends AppCompatActivity {
         newRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newRouteIntent = new Intent(view.getContext(), NewRouteActivity.class);
-                startActivity(newRouteIntent);
+                activityUtils.moveToNewRoute();
             }
         });
     }
@@ -138,8 +137,7 @@ public class MainMenuActivity extends AppCompatActivity {
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Add functionality here
-                Toast.makeText(MainMenuActivity.this, "TODO", Toast.LENGTH_LONG).show();
+                activityUtils.moveToHelp();
             }
         });
     }

@@ -11,10 +11,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adamtimpson.mobilityaid.util.ActivityUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NewRouteActivity extends Activity {
+
+    private ActivityUtils activityUtils = new ActivityUtils(this);
 
     public ListView placesList;
 
@@ -242,8 +246,7 @@ public class NewRouteActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startRouteIntent = new Intent(NewRouteActivity.this, MapsActivity.class);
-                startActivity(startRouteIntent);
+                activityUtils.moveToMaps();
             }
         });
     }
