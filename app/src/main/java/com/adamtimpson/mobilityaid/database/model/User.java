@@ -1,5 +1,7 @@
 package com.adamtimpson.mobilityaid.database.model;
 
+import com.adamtimpson.mobilityaid.util.HashUtils;
+
 public class User {
 
     private Integer id;
@@ -18,7 +20,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.password = password; // The password should already be encrypted before it get to this point
     }
 
     public Integer getId() {
@@ -61,4 +63,14 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

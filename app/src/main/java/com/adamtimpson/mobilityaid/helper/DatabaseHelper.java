@@ -5,12 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.adamtimpson.mobilityaid.database.model.User;
 
-import java.net.PasswordAuthentication;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -61,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(USER_KEY_ID, user.getId());
+//        values.put(USER_KEY_ID, user.getId());
         values.put(USER_KEY_FIRST_NAME, user.getFirstName());
         values.put(USER_KEY_LAST_NAME, user.getLastName());
         values.put(USER_KEY_EMAIL, user.getEmail());
@@ -90,6 +90,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("[DEBUG]", user.toString());
 
         return user;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new LinkedList<User>();
+
+        String query = "SELECT * FROM " + TABLE_USER;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor c = db.rawQuery(query, null);
+
+        User user = null;
+        if(c.moveToFirst()) {
+            do {
+                user = new User();
+                user.setId(Integer.parseInt(c.getString(0)));
+                user.setFirstName(c.getString(1));
+                user.setLastName(c.getString(2));
+                user.setEmail(c.getString(3));
+                user.setPassword(c.getString(4));
+
+                users.add(user);
+            } while(c.moveToNext());
+        }
+
+        Log.d("[DEBUG]", users.toString());
+
+        return users;
     }
 
 }
