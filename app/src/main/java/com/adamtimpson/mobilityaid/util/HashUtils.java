@@ -38,7 +38,7 @@ public class HashUtils {
             encrypted = new String(cipherText);
 
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
+            Log.d("HASH ERROR", e.getMessage());
         }
 
         return encrypted;
@@ -55,7 +55,7 @@ public class HashUtils {
 
             decrypted = new String(clearText);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
+            Log.d("HASH ERROR", e.getMessage());
         }
 
         return decrypted;

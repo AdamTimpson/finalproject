@@ -23,12 +23,12 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        User user = dbh.getUser(0);
-
-        Log.d("[HASH]", user.getPassword());
-        Log.d("[HASH]", HashUtils.encrypt(user.getPassword()));
-        Log.d("[HASH]", HashUtils.decrypt(HashUtils.encrypt(user.getPassword())));
+//
+//        User user = dbh.getUser(0);
+//
+//        Log.d("[HASH]", user.getPassword());
+//        Log.d("[HASH]", HashUtils.encrypt(user.getPassword()));
+//        Log.d("[HASH]", HashUtils.decrypt(HashUtils.encrypt(user.getPassword())));
 
         initTextFields();
         initButton();
