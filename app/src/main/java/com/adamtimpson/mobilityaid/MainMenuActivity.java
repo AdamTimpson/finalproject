@@ -87,8 +87,14 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void processVoiceCommand(String cmd) {
-        if(cmd.equalsIgnoreCase(VoiceUtils.NEW_ROUTE)) {
+        if(cmd.equalsIgnoreCase(VoiceUtils.SET_INTERESTS)) {
+            activityUtils.moveToSetInterests();
+        } else if(cmd.equalsIgnoreCase(VoiceUtils.WALKING_DISTANCE)) {
+            activityUtils.moveToSetWalkingDistance();
+        } else if(cmd.equalsIgnoreCase(VoiceUtils.NEW_ROUTE)) {
             activityUtils.moveToNewRoute();
+        } else if(cmd.equalsIgnoreCase(VoiceUtils.HELP)) {
+            activityUtils.moveToHelp();
         } else {
             Toast.makeText(MainMenuActivity.this, VoiceUtils.getError(cmd), Toast.LENGTH_LONG).show();
 

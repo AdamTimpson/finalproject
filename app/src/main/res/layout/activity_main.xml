@@ -58,6 +58,17 @@
         android:background="@drawable/custom_button_background"
         android:textColor="@color/white"
         android:text="@string/loginButton"/>
+r
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_button_background"
+        android:textColor="@color/white"
+        android:text="@string/registerButton"/>
 
     <Button
         android:id="@+id/loginClearButton"

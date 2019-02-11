@@ -11,9 +11,15 @@
     <string name="passwordETLabel">Password: </string>
     <string name="destinationsLabel">Choose your destinations: </string>
     <string name="chosenDestinations">Current destinations: </string>
+    <string name="registerFirstName">First Name: </string>
+    <string name="registerLastName">Last Name: </string>
+    <string name="registerEmail">Email: </string>
+    <string name="registerPassword">Password: </string>
+    <string name="registerConfirmPassword">Confirm Password: </string>
 
     <!--Buttons-->
     <string name="loginButton">Login</string>
+    <string name="registerButton">Register</string>
     <string name="loginClearButton">Clear</string>
     <string name="startRouteButton">Start Route</string>
     <string name="setDistanceButton">Set Walking Distance</string>
@@ -23,5 +29,7 @@
     <string name="helpButton">View Help</string>
     <string name="title_activity_maps">Map</string>
     <string name="nextPointButton">Next Destination</string>
+    <string name="registerConfirmButton">Register</string>
+    <string name="registerClearButton">Clear</string>
 
 </resources>

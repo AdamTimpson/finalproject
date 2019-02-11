@@ -23,7 +23,8 @@
         android:roundIcon="@drawable/globe_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HelpActivity"></activity>
+        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".HelpActivity" />
         <activity android:name=".SetWalkingDistanceActivity" />
         <activity android:name=".SetInterestsActivity" />
         <activity

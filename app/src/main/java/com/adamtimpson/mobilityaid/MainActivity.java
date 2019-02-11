@@ -1,6 +1,5 @@
 package com.adamtimpson.mobilityaid;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,12 +7,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.adamtimpson.mobilityaid.util.ActivityUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     private final String LOGIN_SUCCESS_MESSAGE = "Login successful";
     private final String LOGIN_FAIL_MESSAGE = "Login failed";
 
+    private ActivityUtils activityUtils = new ActivityUtils(this);
+
     Button loginButton;
+    Button registerButton;
     Button clearButton;
 
     @Override
@@ -21,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.initLoginButtonListener();
+        this.initButtonListeners();
     }
 
-    public void initLoginButtonListener() {
+    public void initButtonListeners() {
         loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
         clearButton = findViewById(R.id.loginClearButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -47,10 +52,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if(validEmail && correctPassword) {
                     Toast.makeText(MainActivity.this, LOGIN_SUCCESS_MESSAGE, Toast.LENGTH_LONG).show();
-                    launchMainMenuActivity();
+                    activityUtils.moveToMainMenu();
                 } else {
                     Toast.makeText(MainActivity.this, LOGIN_FAIL_MESSAGE, Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityUtils.moveToRegister();
             }
         });
 
@@ -61,11 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 ((EditText) findViewById(R.id.passwordInput)).setText("");
             }
         });
-    }
-
-    private void launchMainMenuActivity() {
-        Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
-        startActivity(mainMenuIntent);
     }
 
     private String getText(EditText e) {

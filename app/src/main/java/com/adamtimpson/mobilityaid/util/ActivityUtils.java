@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.adamtimpson.mobilityaid.HelpActivity;
+import com.adamtimpson.mobilityaid.MainMenuActivity;
 import com.adamtimpson.mobilityaid.MapsActivity;
 import com.adamtimpson.mobilityaid.NewRouteActivity;
+import com.adamtimpson.mobilityaid.RegisterActivity;
 import com.adamtimpson.mobilityaid.SetInterestsActivity;
 import com.adamtimpson.mobilityaid.SetWalkingDistanceActivity;
 
@@ -35,6 +37,14 @@ public class ActivityUtils {
 
     public void moveToMaps() {
         this.context.startActivity(new Intent(this.context, MapsActivity.class));
+    }
+
+    public void moveToMainMenu() {
+        this.context.startActivity(new Intent(this.context, MainMenuActivity.class));
+    }
+
+    public void moveToRegister() {
+        this.context.startActivity(new Intent(this.context, RegisterActivity.class));
     }
 
 }
