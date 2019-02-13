@@ -22,43 +22,22 @@ public class HashUtils {
     private static Cipher eCipher;
     private static Cipher dCipher;
 
+    /**
+     * Used to encrypt a password
+     * @param s String to encrypt
+     * @return Entrypted String
+     */
     public static String encrypt(String s) {
-        String encrypted = "";
-
-        try {
-            keyGen = KeyGenerator.getInstance(ALGORITHM);
-            key = keyGen.generateKey();
-
-            eCipher = Cipher.getInstance(ALGORITHM);
-            eCipher.init(Cipher.ENCRYPT_MODE, key);
-
-            byte[] clearText = s.getBytes();
-            byte[] cipherText = eCipher.doFinal(clearText);
-
-            encrypted = new String(cipherText);
-
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            Log.d("HASH ERROR", e.getMessage());
-        }
-
-        return encrypted;
+        return "";
     }
 
+    /**
+     * Mainly for testing purposes. Should not be used in release
+     * @param s String to be decrypted
+     * @return Decrypted String
+     */
     public static String decrypt(String s) {
-        String decrypted = "";
-
-        try {
-            dCipher = Cipher.getInstance(ALGORITHM);
-            dCipher.init(Cipher.DECRYPT_MODE, key);
-
-            byte[] clearText = dCipher.doFinal(s.getBytes());
-
-            decrypted = new String(clearText);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            Log.d("HASH ERROR", e.getMessage());
-        }
-
-        return decrypted;
+        return "";
     }
 
 }

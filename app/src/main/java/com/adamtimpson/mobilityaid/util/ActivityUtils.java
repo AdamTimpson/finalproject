@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.adamtimpson.mobilityaid.HelpActivity;
+import com.adamtimpson.mobilityaid.MainActivity;
 import com.adamtimpson.mobilityaid.MainMenuActivity;
 import com.adamtimpson.mobilityaid.MapsActivity;
 import com.adamtimpson.mobilityaid.NewRouteActivity;
@@ -17,6 +18,10 @@ public class ActivityUtils {
 
     public ActivityUtils(Context context) {
         this.context = context;
+    }
+
+    public void moveToMain() {
+        this.context.startActivity(new Intent(this.context, MainActivity.class));
     }
 
     public void moveToSetInterests() {
