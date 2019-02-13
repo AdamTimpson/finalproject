@@ -14,13 +14,10 @@ import java.util.List;
 
 public class UserEntry {
 
-    private Context context;
-
     private DatabaseHelper dbh;
 
     public UserEntry(Context context) {
-        this.context = context;
-        dbh = new DatabaseHelper(this.context);
+        dbh = new DatabaseHelper(context);
     }
 
     public void addUser(User user) {
@@ -85,6 +82,34 @@ public class UserEntry {
         Log.d("[DEBUG]", users.toString());
 
         return users;
+    }
+
+    public Boolean doesContain(String email) {
+        List<User> users = getAllUsers();
+
+        for(User u: users) {
+            if(u.getEmail().equalsIgnoreCase(email)) {
+                Log.d("[DEBUG]", dbh.getTableUser() + " does contain an entry with email: " + email);
+                return true;
+            }
+        }
+
+        Log.d("[DEBUG]", dbh.getTableUser() + " does NOT contain an entry with email: " + email);
+        return false;
+    }
+
+    public Boolean doesContain(Integer id) {
+        List<User> users = getAllUsers();
+
+        for(User u: users) {
+            if(u.getId() == id) {
+                Log.d("[DEBUG]", dbh.getTableUser() + " does contain an entry with id: " + id);
+                return true;
+            }
+        }
+
+        Log.d("[DEBUG]", dbh.getTableUser() + " does NOT contain an entry with id: " + id);
+        return false;
     }
 
 }

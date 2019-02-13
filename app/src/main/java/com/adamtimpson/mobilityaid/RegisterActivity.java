@@ -9,16 +9,13 @@ import android.widget.Toast;
 
 import com.adamtimpson.mobilityaid.database.entry.UserEntry;
 import com.adamtimpson.mobilityaid.database.model.User;
-import com.adamtimpson.mobilityaid.helper.DatabaseHelper;
 import com.adamtimpson.mobilityaid.util.ActivityUtils;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private ActivityUtils activityUtils = new ActivityUtils(this);
 
-    private DatabaseHelper dbh = new DatabaseHelper(this);
-
-    private UserEntry userEntry;
+    private UserEntry userEntry = new UserEntry(this);
 
     private Button registerButton;
     private Button clearButton;
@@ -33,8 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        userEntry = new UserEntry(this);
 
         initTextFields();
         initButton();
@@ -53,8 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewUser();
-                activityUtils.moveToMain();
+                if(addNewUser())
+                    activityUtils.moveToMainMenu();
             }
         });
 
@@ -67,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void addNewUser() {
+    private Boolean addNewUser() {
         Integer id = 0;
         String firstName = firstNameET.getText().toString();
         String lastName = lastNameET.getText().toString();
@@ -75,19 +70,31 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordET.getText().toString();
         String passwordConfirm = passwordConfirmET.getText().toString();
 
-        if(firstName == "" || lastName == "" || email == "" || password == "" || passwordConfirm == "") {
+        if(firstName.equals("") || lastName.equals("") || email.equals("") || password.equals("") || passwordConfirm.equals("")) {
             Toast.makeText(RegisterActivity.this, "Please fill out all fields!", Toast.LENGTH_LONG).show();
+
+            return false;
         } else {
             if(password.equals(passwordConfirm)) {
-                User user = new User(id, firstName, lastName, email, password);
+                if(userEntry.doesContain(email)) {
+                    Toast.makeText(RegisterActivity.this, "That email is already registered!", Toast.LENGTH_LONG).show();
 
-                clearAllFields();
+                    return false;
+                } else {
+                    User user = new User(id, firstName, lastName, email, password);
 
-                userEntry.addUser(user);
+                    clearAllFields();
 
-                Toast.makeText(RegisterActivity.this, "You have been registered!", Toast.LENGTH_LONG).show();
+                    userEntry.addUser(user);
+
+                    Toast.makeText(RegisterActivity.this, "You have been registered!", Toast.LENGTH_LONG).show();
+
+                    return true;
+                }
             } else {
                 Toast.makeText(RegisterActivity.this, "Passwords do not match!", Toast.LENGTH_LONG).show();
+
+                return false;
             }
         }
     }

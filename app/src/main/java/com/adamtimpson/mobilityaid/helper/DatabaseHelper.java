@@ -1,16 +1,8 @@
 package com.adamtimpson.mobilityaid.helper;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import com.adamtimpson.mobilityaid.database.model.User;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -19,7 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "mobility_aid";
     private final String CREATE_USER_TABLE = "CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, email TEXT, password TEXT)";
     private static final String TABLE_USER = "user";
-    private static final String USER_KEY_ID = "id";
+    private static final String USER_KEY_ID = "id ";
     private static final String USER_KEY_FIRST_NAME = "firstName";
     private static final String USER_KEY_LAST_NAME = "lastName";
     private static final String USER_KEY_EMAIL = "email";
@@ -52,16 +44,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS user");
 
         this.onCreate(sqLiteDatabase);
-    }
-
-    @Override
-    public SQLiteDatabase getReadableDatabase() {
-        return this.getReadableDatabase();
-    }
-
-    @Override
-    public SQLiteDatabase getWritableDatabase() {
-        return this.getWritableDatabase();
     }
 
     public Integer getDatabaseVersion() {
