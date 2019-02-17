@@ -84,6 +84,30 @@ public class UserEntry {
         return users;
     }
 
+    public Integer updateUser(User user) {
+        SQLiteDatabase db = dbh.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(dbh.getUserKeyFirstName(), user.getFirstName());
+        values.put(dbh.getUserKeyLastName(), user.getLastName());
+        values.put(dbh.getUserKeyEmail(), user.getEmail());
+        values.put(dbh.getUserKeyPassword(), user.getPassword());
+
+        Integer result = db.update(dbh.getTableUser(), values, dbh.getUserKeyId() + " = ?", new String[] {String.valueOf(user.getId())});
+
+        db.close();
+
+        return result;
+    }
+
+    public void deleteUser(User user) {
+        SQLiteDatabase db = dbh.getWritableDatabase();
+
+        db.delete(dbh.getTableUser(), dbh.getUserKeyId() + " = ?", new String[] {String.valueOf(user.getId())});
+
+        db.close();
+    }
+
     public Boolean doesContain(String email) {
         List<User> users = getAllUsers();
 
@@ -110,6 +134,19 @@ public class UserEntry {
 
         Log.d("[DEBUG]", dbh.getTableUser() + " does NOT contain an entry with id: " + id);
         return false;
+    }
+
+    public String getPasswordByEmail(String email) {
+        String password = "";
+
+        List<User> users = getAllUsers();
+
+        for(User u: users) {
+            if(u.getEmail().equalsIgnoreCase(email))
+                password = u.getPassword();
+        }
+
+        return password;
     }
 
 }

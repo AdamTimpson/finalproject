@@ -2,11 +2,13 @@ package com.adamtimpson.mobilityaid;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.adamtimpson.mobilityaid.database.entry.UserEntry;
 import com.adamtimpson.mobilityaid.util.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private final String LOGIN_FAIL_MESSAGE = "Login failed";
 
     private ActivityUtils activityUtils = new ActivityUtils(this);
+
+    private UserEntry userEntry = new UserEntry(this);
 
     Button loginButton;
     Button registerButton;
@@ -42,15 +46,17 @@ public class MainActivity extends AppCompatActivity {
                 Boolean validEmail = false;
                 Boolean correctPassword = false;
 
-                if(email.toLowerCase().equals("a@test.com")) {
+                if(userEntry.doesContain(email)) {
                     validEmail = true;
 
-                    if(password.equals("1234")) {
+                    if(password.equals(userEntry.getPasswordByEmail(email))) {
                         correctPassword = true;
                     }
                 }
 
                 if(validEmail && correctPassword) {
+                    Log.d("[DEBUG]", "Logged in: " + email + " with password: " + password);
+
                     Toast.makeText(MainActivity.this, LOGIN_SUCCESS_MESSAGE, Toast.LENGTH_LONG).show();
                     activityUtils.moveToMainMenu();
                 } else {
