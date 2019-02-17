@@ -35,7 +35,7 @@ public class RouteEntry {
         db.close();
     }
 
-    public User getRoute(Integer id) {
+    public Route getRoute(Integer id) {
         SQLiteDatabase db = dbh.getReadableDatabase();
 
         Cursor c = db.query(dbh.getTableRoute(), dbh.getColumnsRoute(), " id = ?", new String[]{String.valueOf(id)}, null, null, null, null);
