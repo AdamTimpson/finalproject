@@ -27,7 +27,7 @@ public class RouteEntry {
         SQLiteDatabase db = dbh.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(dbh.getRouteKeyId(), route.getUserId());
+        values.put(dbh.getRouteKeyUserId(), route.getUserId());
         values.put(dbh.getRouteKeyDestinations(), route.getDestinations());
 
         db.insert(dbh.getTableRoute(), null, values);
