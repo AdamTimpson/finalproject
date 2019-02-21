@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.adamtimpson.mobilityaid.util.ActivityUtils;
@@ -24,15 +25,24 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private ActivityUtils activityUtils = new ActivityUtils(this);
 
-    Button setInterestsButton;
-    Button setWalkingDistanceButton;
-    Button newRouteButton;
-    Button helpButton;
+    private VoiceUtils voiceUtils;
+
+    private Button setInterestsButton;
+    private Button setWalkingDistanceButton;
+    private Button newRouteButton;
+    private Button helpButton;
+
+    private LinearLayout setInterestsLayout;
+    private LinearLayout setWalkingDistanceLayout;
+    private LinearLayout newRouteLayout;
+    private LinearLayout helpLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        voiceUtils = new VoiceUtils(getApplicationContext());
 
         initClickListeners();
     }
@@ -87,63 +97,186 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void processVoiceCommand(String cmd) {
-        if(cmd.equalsIgnoreCase(VoiceUtils.SET_INTERESTS)) {
+        if(cmd.equalsIgnoreCase(voiceUtils.getSetInterests())) {
             activityUtils.moveToSetInterests();
-        } else if(cmd.equalsIgnoreCase(VoiceUtils.WALKING_DISTANCE)) {
+        } else if(cmd.equalsIgnoreCase(voiceUtils.getWalkingDistance())) {
             activityUtils.moveToSetWalkingDistance();
-        } else if(cmd.equalsIgnoreCase(VoiceUtils.NEW_ROUTE)) {
+        } else if(cmd.equalsIgnoreCase(voiceUtils.getNewRoute())) {
             activityUtils.moveToNewRoute();
-        } else if(cmd.equalsIgnoreCase(VoiceUtils.HELP)) {
+        } else if(cmd.equalsIgnoreCase(voiceUtils.getHelp())) {
             activityUtils.moveToHelp();
         } else {
-            Toast.makeText(MainMenuActivity.this, VoiceUtils.getError(cmd), Toast.LENGTH_LONG).show();
-
+            Toast.makeText(MainMenuActivity.this, voiceUtils.getError(cmd), Toast.LENGTH_LONG).show();
         }
     }
 
     private void initClickListeners() {
         initSetInterestsListener();
-        initSetWalkingDistance();
+        initSetWalkingDistanceListener();
         initNewRouteListener();
         initHelpListener();
     }
 
     private void initSetInterestsListener() {
         setInterestsButton = findViewById(R.id.myInterestsButton);
+        setInterestsLayout = findViewById(R.id.myInterestsLayout);
+
+        // Button click
         setInterestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activityUtils.moveToSetInterests();
             }
         });
+
+        // Layout click
+        setInterestsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityUtils.moveToSetInterests();
+            }
+        });
+
+        // Button long click
+        setInterestsButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getSetInterests(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
+
+        // Layout long click
+        setInterestsLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getSetInterests(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
     }
 
-    private void initSetWalkingDistance() {
+    private void initSetWalkingDistanceListener() {
         setWalkingDistanceButton = findViewById(R.id.setDistanceButton);
+        setWalkingDistanceLayout = findViewById(R.id.setDistanceLayout);
+
+        // Button click
         setWalkingDistanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activityUtils.moveToSetWalkingDistance();
             }
         });
+
+        // Layout click
+        setWalkingDistanceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityUtils.moveToSetWalkingDistance();
+            }
+        });
+
+        // Button long click
+        setWalkingDistanceButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getWalkingDistance(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
+
+        // Layout long click
+        setWalkingDistanceLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getWalkingDistance(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
     }
 
     private void initNewRouteListener() {
         newRouteButton = findViewById(R.id.newRouteButton);
+        newRouteLayout = findViewById(R.id.newRouteLayout);
+
+        // Button click
         newRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activityUtils.moveToNewRoute();
             }
         });
+
+        // Layout click
+        newRouteLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityUtils.moveToNewRoute();
+            }
+        });
+
+        // Button long click
+        newRouteButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getNewRoute(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
+
+        // Layout long click
+        newRouteLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getNewRoute(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
     }
 
     private void initHelpListener() {
         helpButton = findViewById(R.id.helpButton);
+        helpLayout = findViewById(R.id.helpLayout);
+
+        // Button click
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activityUtils.moveToHelp();
+            }
+        });
+
+        // Layout click
+        helpLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityUtils.moveToHelp();
+            }
+        });
+
+        // Button long click
+        helpButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getHelp(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
+
+        // Layout long click
+        helpLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getHelp(), voiceUtils.getQueue(), null, null);
+
+                return true;
             }
         });
     }

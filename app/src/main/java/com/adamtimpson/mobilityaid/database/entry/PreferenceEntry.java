@@ -10,7 +10,6 @@ import com.adamtimpson.mobilityaid.database.model.Preference;
 import com.adamtimpson.mobilityaid.database.model.Route;
 import com.adamtimpson.mobilityaid.helper.DatabaseHelper;
 
-import java.lang.ref.PhantomReference;
 import java.util.LinkedList;
 import java.util.List;
 

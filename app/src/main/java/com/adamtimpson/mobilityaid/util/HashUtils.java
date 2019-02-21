@@ -1,16 +1,7 @@
 package com.adamtimpson.mobilityaid.util;
 
-import android.util.Base64;
-import android.util.Log;
-
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 public class HashUtils {
@@ -25,7 +16,7 @@ public class HashUtils {
     /**
      * Used to encrypt a password
      * @param s String to encrypt
-     * @return Entrypted String
+     * @return Encrypted String
      */
     public static String encrypt(String s) {
         return "";
