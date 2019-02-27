@@ -56,6 +56,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private LocationManager locationManager;
 
+    private Boolean orderDestinations = NewRouteActivity.getOrderDestinations();
+
     private ArrayList<String> selectedPlaces = NewRouteActivity.getSelectedPlaces();
 
     private ArrayList<LatLng> allMarkerLatLngArray = new ArrayList<>();
@@ -97,7 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // If the permission is not granted...
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION}, MY_REQUEST_INT);
+                    Manifest.permission.ACCESS_FINE_LOCATION}, MY_REQUEST_INT);
             }
 
             return;
@@ -160,11 +162,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     JSONArray results = jsonResponse.getJSONArray("results");
 
-                    JSONObject geo;
-                    JSONObject location;
-
-                    geo = results.getJSONObject(0);
-                    location = geo.getJSONObject("geometry").getJSONObject("location");
+                    JSONObject geo = results.getJSONObject(0);
+                    JSONObject location = geo.getJSONObject("geometry").getJSONObject("location");
 
                     LatLng markerLatLng = new LatLng(Double.parseDouble(location.get("lat").toString()), Double.parseDouble(location.get("lng").toString()));
 
@@ -188,8 +187,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void addMarker(LatLng markerLatLng, String title) {
-        MarkerOptions options;
-        options = new MarkerOptions();
+        MarkerOptions options = new MarkerOptions();
         options.position(markerLatLng);
         options.title(title);
 
@@ -257,5 +255,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(currentPolyline != null) currentPolyline.remove();
 
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+    }
+
+    private Double calculateDistance(LatLng p1, LatLng p2) {
+        // Lat = x, Lng = y, Distance = sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
+        Double x1 = p1.latitude;
+        Double y1 = p1.longitude;
+        Double x2 = p2.latitude;
+        Double y2 = p2.longitude;
+
+        Double xDiffSqr = Math.pow((x2 - x1), 2);
+        Double yDiffSqr = Math.pow((y2 - y1), 2);
+
+        return Math.sqrt(xDiffSqr + yDiffSqr);
     }
 }

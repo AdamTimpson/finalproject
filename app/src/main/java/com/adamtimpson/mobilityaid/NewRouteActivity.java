@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NewRouteActivity extends Activity {
+
+    private static Boolean orderDestinations = false;
 
     private ActivityUtils activityUtils = new ActivityUtils(this);
 
@@ -293,6 +296,27 @@ public class NewRouteActivity extends Activity {
         }
 
         return selectedPlaces;
+    }
+
+    public void orderDestinationsClick(View view) {
+        Boolean checked = ((CheckBox) view).isChecked();
+
+        switch (view.getId()) {
+            case(R.id.orderDestinationsCB) : {
+                if(checked) {
+                    orderDestinations = true;
+                } else {
+                    orderDestinations = false;
+                }
+
+                break;
+            }
+        }
+
+    }
+
+    public static Boolean getOrderDestinations() {
+        return orderDestinations;
     }
 
 }

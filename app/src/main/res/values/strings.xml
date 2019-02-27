@@ -31,5 +31,9 @@
     <string name="nextPointButton">Next Destination</string>
     <string name="registerConfirmButton">Register</string>
     <string name="registerClearButton">Clear</string>
+    <string name="myRoutesButton">My Routes</string>
+
+    <!--Checkboxes-->
+    <string name="orderDestinations">Order destinations from nearest to furthest? </string>
 
 </resources>

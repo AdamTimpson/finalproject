@@ -52,6 +52,15 @@
                 android:textColor="@color/white"/>
         </LinearLayout>
 
+
+        <CheckBox
+            android:id="@+id/orderDestinationsCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/orderDestinations"
+            android:layout_marginBottom="20dp"
+            android:onClick="orderDestinationsClick"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
