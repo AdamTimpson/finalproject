@@ -3,6 +3,9 @@ package com.adamtimpson.mobilityaid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,17 +16,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adamtimpson.mobilityaid.util.ActivityUtils;
+import com.adamtimpson.mobilityaid.util.LogInUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class NewRouteActivity extends Activity {
+public class NewRouteActivity extends AppCompatActivity {
 
     private static Boolean orderDestinations = false;
 
     private ActivityUtils activityUtils = new ActivityUtils(this);
 
     public ListView placesList;
+
+    private static List<String> selectedPlaces = null;
+
+    private static ArrayList<String> addedPlaces = new ArrayList<String>();
+
+    private static String placesString;
+
+    private Button startButton;
+    private Button clearButton;
 
     public static final String[] PLACES_VALUES = {
             "accounting",
@@ -211,13 +225,6 @@ public class NewRouteActivity extends Activity {
             "Zoo"
     };
 
-    private ArrayList<String> addedPlaces = new ArrayList<String>();
-
-    private static String placesString;
-
-    private Button startButton;
-    private Button clearButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,6 +244,45 @@ public class NewRouteActivity extends Activity {
                 resetChosenPlacesText(addedPlaces);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_save_route, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.saveRouteButton: {
+                saveNewRoute(selectedPlaces); // selectedPlaces contains the VALUES not the KEYS
+
+                return true;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveNewRoute(List<String> places) {
+        LogInUtils.getInstance().setValuesToBeSaved(places);
+        LogInUtils.getInstance().setKeysToBeSaved(getKeysFromValues(places));
+
+        activityUtils.moveToSaveRoute();
+    }
+
+    private List<String> getKeysFromValues(List<String> values) {
+        List<String> keys = null;
+
+        for(String s: values) {
+            if(Arrays.asList(PLACES_VALUES).contains(s)) {
+                keys.add(Arrays.asList(PLACES_KEYS).get(Arrays.asList(PLACES_VALUES).indexOf(s)));
+            }
+        }
+
+        return keys;
     }
 
     private void initClickListeners() {
@@ -285,8 +331,8 @@ public class NewRouteActivity extends Activity {
         return placesString;
     }
 
-    public static ArrayList<String> getSelectedPlaces() {
-        ArrayList<String> selectedPlaces = new ArrayList<String>();
+    public static List<String> getSelectedPlaces() {
+        selectedPlaces = new ArrayList<String>();
         String[] placesStringArray = placesString.split(", ");
 
         for(String s: placesStringArray) {
@@ -305,8 +351,10 @@ public class NewRouteActivity extends Activity {
             case(R.id.orderDestinationsCB) : {
                 if(checked) {
                     orderDestinations = true;
+                    Toast.makeText(NewRouteActivity.this, "Not yet implemented...", Toast.LENGTH_LONG).show();
                 } else {
                     orderDestinations = false;
+                    Toast.makeText(NewRouteActivity.this, "Not yet implemented...", Toast.LENGTH_LONG).show();
                 }
 
                 break;

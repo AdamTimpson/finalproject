@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final Integer DATABASE_VERSION = 1;
 
     private final String CREATE_USER_TABLE = "CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, email TEXT, password TEXT)";
-    private final String CREATE_ROUTE_TABLE = "CREATE TABLE route(id INTEGER PRIMARY KEY AUTOINCREMENT,  userId INTEGER, destinations TEXT)";
+    private final String CREATE_ROUTE_TABLE = "CREATE TABLE route(id INTEGER PRIMARY KEY AUTOINCREMENT,  userId INTEGER, name TEXT, destinations TEXT)";
     private final String CREATE_PREFERENCES_TABLE = "CREATE TABLE preferences(id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, places TEXT)";
 
     private static final String DATABASE_NAME = "mobility_aid";
@@ -23,8 +23,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_ROUTE = "route";
     private static final String ROUTE_KEY_ID = "id";
     private static final String ROUTE_KEY_USER_ID = "userId";
+    private static final String ROUTE_KEY_NAME = "name";
     private static final String ROUTE_KEY_DESTINATIONS = "destinations";
-    private static final String COLUMNS_ROUTE[] = {ROUTE_KEY_ID, ROUTE_KEY_USER_ID, ROUTE_KEY_DESTINATIONS};
+    private static final String COLUMNS_ROUTE[] = {ROUTE_KEY_ID, ROUTE_KEY_USER_ID, ROUTE_KEY_NAME, ROUTE_KEY_DESTINATIONS};
     private static final String TABLE_PREFERENCES = "preferences";
     private static final String PREFERENCES_KEY_ID = "id";
     private static final String PREFERENCES_KEY_USER_ID = "userId";
@@ -97,6 +98,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String getRouteKeyUserId() {
         return ROUTE_KEY_USER_ID;
+    }
+
+    public String getRouteKeyName() {
+        return ROUTE_KEY_NAME;
     }
 
     public String getRouteKeyDestinations() {

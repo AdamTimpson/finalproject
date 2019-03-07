@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.adamtimpson.mobilityaid.database.model.Route;
-import com.adamtimpson.mobilityaid.database.model.User;
 import com.adamtimpson.mobilityaid.helper.DatabaseHelper;
 
 import java.util.LinkedList;
@@ -28,6 +27,7 @@ public class RouteEntry {
 
         ContentValues values = new ContentValues();
         values.put(dbh.getRouteKeyUserId(), route.getUserId());
+        values.put(dbh.getRouteKeyName(), route.getName());
         values.put(dbh.getRouteKeyDestinations(), route.getDestinations());
 
         db.insert(dbh.getTableRoute(), null, values);
@@ -46,7 +46,8 @@ public class RouteEntry {
         Route route = new Route();
         route.setId(Integer.parseInt(c.getString(0)));
         route.setUserId(Integer.parseInt(c.getString(1)));
-        route.setDestinations(c.getString(2));
+        route.setName(c.getString(2));
+        route.setDestinations(c.getString(3));
 
         Log.d("[DEBUG]", route.toString());
 
@@ -68,7 +69,8 @@ public class RouteEntry {
                 route = new Route();
                 route.setId(Integer.parseInt(c.getString(0)));
                 route.setUserId(Integer.parseInt(c.getString(1)));
-                route.setDestinations(c.getString(2));
+                route.setName(c.getString(2));
+                route.setDestinations(c.getString(3));
 
                 routes.add(route);
             } while(c.moveToNext());
@@ -84,6 +86,7 @@ public class RouteEntry {
 
         ContentValues values = new ContentValues();
         values.put(dbh.getRouteKeyUserId(), route.getUserId());
+        values.put(dbh.getRouteKeyName(), route.getName());
         values.put(dbh.getRouteKeyDestinations(), route.getDestinations());
 
         Integer result = db.update(dbh.getTableRoute(), values, dbh.getRouteKeyId() + " = ?", new String[] {String.valueOf(route.getId())});

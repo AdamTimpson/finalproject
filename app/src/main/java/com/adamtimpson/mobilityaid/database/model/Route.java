@@ -5,15 +5,17 @@ public class Route {
     private Integer id;
     private Integer userId;
 
+    private String name;
     private String destinations;
 
     public Route() {
 
     }
 
-    public Route(Integer id, Integer userId, String destinations) {
+    public Route(Integer id, Integer userId, String name, String destinations) {
         this.id = id;
         this.userId = userId;
+        this.name = name;
         this.destinations = destinations;
     }
 
@@ -33,6 +35,14 @@ public class Route {
         this.userId = userId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDestinations() {
         return destinations;
     }
@@ -46,6 +56,7 @@ public class Route {
         return "Route{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", name='" + name + '\'' +
                 ", destinations='" + destinations + '\'' +
                 '}';
     }

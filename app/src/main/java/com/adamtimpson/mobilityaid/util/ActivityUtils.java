@@ -9,6 +9,7 @@ import com.adamtimpson.mobilityaid.MainMenuActivity;
 import com.adamtimpson.mobilityaid.MapsActivity;
 import com.adamtimpson.mobilityaid.NewRouteActivity;
 import com.adamtimpson.mobilityaid.RegisterActivity;
+import com.adamtimpson.mobilityaid.SaveRouteActivity;
 import com.adamtimpson.mobilityaid.SetInterestsActivity;
 import com.adamtimpson.mobilityaid.SetWalkingDistanceActivity;
 
@@ -50,6 +51,10 @@ public class ActivityUtils {
 
     public void moveToRegister() {
         this.context.startActivity(new Intent(this.context, RegisterActivity.class));
+    }
+
+    public void moveToSaveRoute() {
+        this.context.startActivity(new Intent(this.context, SaveRouteActivity.class));
     }
 
 }

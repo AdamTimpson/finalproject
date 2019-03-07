@@ -11,8 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adamtimpson.mobilityaid.database.model.User;
 import com.adamtimpson.mobilityaid.util.ActivityUtils;
 import com.adamtimpson.mobilityaid.util.LogInUtils;
 import com.adamtimpson.mobilityaid.util.VoiceUtils;
@@ -47,8 +49,17 @@ public class MainMenuActivity extends AppCompatActivity {
 
         initClickListeners();
 
-        LogInUtils logInUtils = LogInUtils.getInstance();
-        System.out.println("THE CURRENT LOGGED IN USER IS... " + logInUtils.getCurrentUser().toString());
+        User loggedInUser = LogInUtils.getInstance().getCurrentUser();
+
+        System.out.println("THE CURRENT LOGGED IN USER IS... " + loggedInUser.toString());
+
+        StringBuilder welcomeMessage = new StringBuilder();
+        welcomeMessage.append("Hi, ");
+        welcomeMessage.append(loggedInUser.getFirstName() + " ");
+        welcomeMessage.append("(" + loggedInUser.getEmail() + ")");
+
+        TextView userNameDisplay = findViewById(R.id.userNameDisplay);
+        userNameDisplay.setText(welcomeMessage.toString());
     }
 
     @Override
