@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.adamtimpson.mobilityaid.util.ActivityUtils;
+import com.adamtimpson.mobilityaid.util.LogInUtils;
 import com.adamtimpson.mobilityaid.util.VoiceUtils;
 
 import java.util.ArrayList;
@@ -45,6 +46,9 @@ public class MainMenuActivity extends AppCompatActivity {
         voiceUtils = new VoiceUtils(getApplicationContext());
 
         initClickListeners();
+
+        LogInUtils logInUtils = LogInUtils.getInstance();
+        System.out.println("THE CURRENT LOGGED IN USER IS... " + logInUtils.getCurrentUser().toString());
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.adamtimpson.mobilityaid.database.entry.UserEntry;
 import com.adamtimpson.mobilityaid.database.model.User;
 import com.adamtimpson.mobilityaid.util.ActivityUtils;
+import com.adamtimpson.mobilityaid.util.LogInUtils;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -86,6 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
                     clearAllFields();
 
                     userEntry.addUser(user);
+
+                    LogInUtils.getInstance().setCurrentUser(new User(userEntry.getIdByEmail(email), userEntry));
 
                     Toast.makeText(RegisterActivity.this, "You have been registered!", Toast.LENGTH_LONG).show();
 

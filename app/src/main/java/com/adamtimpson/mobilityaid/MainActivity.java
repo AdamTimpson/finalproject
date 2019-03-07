@@ -59,13 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 if(validEmail && correctPassword) {
                     Log.d("[DEBUG]", "Logged in: " + email + " with password: " + password);
 
-                    LogInUtils logInUtils = LogInUtils.getInstance();
-
-                    User loggedInUser = new User();
-                    loggedInUser.setEmail(email);
-                    loggedInUser.setPassword(password);
-
-                    logInUtils.setCurrentUser(loggedInUser);
+                    LogInUtils.getInstance().setCurrentUser(new User(userEntry.getIdByEmail(email), userEntry));
 
                     Toast.makeText(MainActivity.this, LOGIN_SUCCESS_MESSAGE, Toast.LENGTH_LONG).show();
                     activityUtils.moveToMainMenu();
