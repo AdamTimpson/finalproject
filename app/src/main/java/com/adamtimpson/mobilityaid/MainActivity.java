@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.adamtimpson.mobilityaid.database.entry.UserEntry;
+import com.adamtimpson.mobilityaid.database.model.User;
 import com.adamtimpson.mobilityaid.util.ActivityUtils;
+import com.adamtimpson.mobilityaid.util.LogInUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if(validEmail && correctPassword) {
                     Log.d("[DEBUG]", "Logged in: " + email + " with password: " + password);
+
+                    LogInUtils logInUtils = LogInUtils.getInstance();
+
+                    User loggedInUser = new User();
+                    loggedInUser.setEmail(email);
+                    loggedInUser.setPassword(password);
+
+                    logInUtils.setCurrentUser(loggedInUser);
 
                     Toast.makeText(MainActivity.this, LOGIN_SUCCESS_MESSAGE, Toast.LENGTH_LONG).show();
                     activityUtils.moveToMainMenu();

@@ -136,6 +136,21 @@ public class UserEntry {
         return false;
     }
 
+    public Integer getIdByEmail(String email) {
+        List<User> users = getAllUsers();
+
+        Integer result = -1; // Error
+
+        for(User u: users) {
+            if(u.getEmail().equalsIgnoreCase(email)) {
+                result = u.getId();
+                break;
+            }
+        }
+
+        return result;
+    }
+
     public String getPasswordByEmail(String email) {
         String password = "";
 

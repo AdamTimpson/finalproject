@@ -1,7 +1,5 @@
 package com.adamtimpson.mobilityaid.database.model;
 
-import com.adamtimpson.mobilityaid.util.HashUtils;
-
 public class User {
 
     private Integer id;

@@ -8,8 +8,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final Integer DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "mobility_aid";
     private final String CREATE_USER_TABLE = "CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, email TEXT, password TEXT)";
+    private final String CREATE_ROUTE_TABLE = "CREATE TABLE route(id INTEGER PRIMARY KEY AUTOINCREMENT,  userId INTEGER, destinations TEXT)";
+    private final String CREATE_PREFERENCES_TABLE = "CREATE TABLE preferences(id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, places TEXT)";
+
+    private static final String DATABASE_NAME = "mobility_aid";
     private static final String TABLE_USER = "user";
     private static final String USER_KEY_ID = "id ";
     private static final String USER_KEY_FIRST_NAME = "firstName";
@@ -17,13 +20,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_KEY_EMAIL = "email";
     private static final String USER_KEY_PASSWORD = "password";
     private static final String[] COLUMNS_USER = {USER_KEY_ID, USER_KEY_FIRST_NAME, USER_KEY_LAST_NAME, USER_KEY_EMAIL, USER_KEY_PASSWORD};
-    private final String CREATE_ROUTE_TABLE = "CREATE TABLE route(id INTEGER PRIMARY KEY AUTOINCREMENT,  userId INTEGER, destinations TEXT)";
     private static final String TABLE_ROUTE = "route";
     private static final String ROUTE_KEY_ID = "id";
     private static final String ROUTE_KEY_USER_ID = "userId";
     private static final String ROUTE_KEY_DESTINATIONS = "destinations";
     private static final String COLUMNS_ROUTE[] = {ROUTE_KEY_ID, ROUTE_KEY_USER_ID, ROUTE_KEY_DESTINATIONS};
-    private final String CREATE_PREFERENCES_TABLE = "CREATE TABLE preferences(id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, places TEXT)";
     private static final String TABLE_PREFERENCES = "preferences";
     private static final String PREFERENCES_KEY_ID = "id";
     private static final String PREFERENCES_KEY_USER_ID = "userId";
