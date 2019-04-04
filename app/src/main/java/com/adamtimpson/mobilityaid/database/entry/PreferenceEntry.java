@@ -93,10 +93,10 @@ public class PreferenceEntry {
         return result;
     }
 
-    public void deletePreference(Route route) {
+    public void deletePreference(Preference preference) {
         SQLiteDatabase db = dbh.getWritableDatabase();
 
-        db.delete(dbh.getTablePreferences(), dbh.getPreferencesKeyId() + " = ?", new String[] {String.valueOf(route.getId())});
+        db.delete(dbh.getTablePreferences(), dbh.getPreferencesKeyId() + " = ?", new String[] {String.valueOf(preference.getId())});
 
         db.close();
     }

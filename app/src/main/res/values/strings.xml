@@ -17,6 +17,7 @@
     <string name="registerPassword">Password: </string>
     <string name="registerConfirmPassword">Confirm Password: </string>
     <string name="routeName">Route Name: </string>
+    <string name="km">KM</string>
 
     <!--Buttons-->
     <string name="loginButton">Login</string>
@@ -38,4 +39,32 @@
     <!--Checkboxes-->
     <string name="orderDestinations">Order destinations from nearest to furthest? </string>
 
+    <!--Help-->
+    <string name="help_planANewRouteTitle">PLANNING A NEW ROUTE</string>
+    <string name="help_planANewRouteText">
+        If you want to plan a new route, you can use the "Plan a New Route" button on the main menu.
+        Here, you can select the destinations you want to travel to. Once this is done, you can start
+        your route using the "Start Route" button. Alternatively, you can save your new route,
+        using the button in the top right of the screen. You will then be prompted to enter a name
+        for your new route. Enter a name, click save, and you will be presented with your saved routes.
+    </string>
+
+    <string name="help_myRoutesTitle">USING SAVED ROUTES</string>
+    <string name="help_myRoutesText">
+        From this screen, you can start one of your saved routes. This is a good idea, if for example,
+        you routinely travel from your home to an ATM then a convenience store. All you need to do,
+        is tap on the route you would like to start, and you will be brought to the map screen.
+    </string>
+
+    <string name="help_preferencesTitle">SETTING YOUR PREFERENCES</string>
+    <string name="help_preferencesText">
+        If you would like to save a custom location, you can do so in the "Set My Preferences" screen.
+        ***FINISH THIS***
+    </string>
+
+    <string name="help_walkingDistanceTitle">SETTING YOUR WALKING DISTANCE </string>
+    <string name="help_walkingDistanceText">
+        Here, you can set your preferred walking distance. If this is not set, a default of five(5)
+        kilometres(km) will be used.
+    </string>
 </resources>

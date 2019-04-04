@@ -16,8 +16,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.adamtimpson.mobilityaid.database.model.Route;
+import com.adamtimpson.mobilityaid.database.entry.DistanceEntry;
+import com.adamtimpson.mobilityaid.database.model.User;
 import com.adamtimpson.mobilityaid.util.FetchURL;
+import com.adamtimpson.mobilityaid.util.LogInUtils;
 import com.adamtimpson.mobilityaid.util.TaskLoadedCallback;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -73,6 +75,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private JSONObject jsonResponse;
 
     private Polyline currentPolyline;
+
+    private User curentUser = LogInUtils.getInstance().getCurrentUser();
+
+    private DistanceEntry distanceEntry = new DistanceEntry(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,8 +178,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void sendVolleyRequest(final String searchString) {
         Log.d("[DEBUG]", searchString);
 
+        String radiusString = "";
+
+        if(distanceEntry.getDistanceByUserId(curentUser.getId()) == null || distanceEntry.getDistanceByUserId(curentUser.getId()).getDistance() == null) {
+            radiusString = "5000";
+        } else if(distanceEntry.getDistanceByUserId(curentUser.getId()).getDistance() != null) {
+            radiusString = "" + (distanceEntry.getDistanceByUserId(curentUser.getId()).getDistance() * 1000);
+        }
+
         String latLngString = "" + _currentLatLng.latitude + "," + _currentLatLng.longitude;
-        String radiusString = "5000"; // metres
         String urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + latLngString + "&radius=" + radiusString + "&type=" + searchString + "&key=" + key;
 
         Log.d("[DEBUG]", "URL: " + urlString);

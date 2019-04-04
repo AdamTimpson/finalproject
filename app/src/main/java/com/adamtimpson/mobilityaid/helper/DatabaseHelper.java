@@ -11,6 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final String CREATE_USER_TABLE = "CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, email TEXT, password TEXT)";
     private final String CREATE_ROUTE_TABLE = "CREATE TABLE route(id INTEGER PRIMARY KEY AUTOINCREMENT,  userId INTEGER, name TEXT, destinations TEXT)";
     private final String CREATE_PREFERENCES_TABLE = "CREATE TABLE preferences(id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, places TEXT)";
+    private final String CREATE_DISTANCE_TABLE = "CREATE TABLE distance(id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, distance INTEGER)";
 
     private static final String DATABASE_NAME = "mobility_aid";
     private static final String TABLE_USER = "user";
@@ -31,6 +32,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PREFERENCES_KEY_USER_ID = "userId";
     private static final String PREFERENCES_KEY_PLACES = "places";
     private static final String COLUMN_PREFERENCES[] = {PREFERENCES_KEY_ID, PREFERENCES_KEY_USER_ID, PREFERENCES_KEY_PLACES};
+    private static final String TABLE_DISTANCE = "distance";
+    private static final String DISTANCE_KEY_ID = "id";
+    private static final String DISTANCE_KEY_USER_ID = "userId";
+    private static final String DISTANCE_KEY_DISTANCE = "distance";
+    private static final String COLUMN_DISTANCE[] = {DISTANCE_KEY_ID, DISTANCE_KEY_USER_ID, DISTANCE_KEY_DISTANCE};
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_USER_TABLE);
         sqLiteDatabase.execSQL(CREATE_ROUTE_TABLE);
         sqLiteDatabase.execSQL(CREATE_PREFERENCES_TABLE);
+        sqLiteDatabase.execSQL(CREATE_DISTANCE_TABLE);
     }
 
     @Override
@@ -48,16 +55,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS user");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS route");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS preferences");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS distance");
 
         this.onCreate(sqLiteDatabase);
-    }
-
-    public Integer getDatabaseVersion() {
-        return DATABASE_VERSION;
-    }
-
-    public String getCreateUserTable() {
-        return CREATE_USER_TABLE;
     }
 
     public String getTableUser() {
@@ -88,10 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return COLUMNS_USER;
     }
 
-    public String getCreateRouteTable() {
-        return CREATE_ROUTE_TABLE;
-    }
-
     public String getTableRoute() {
         return TABLE_ROUTE;
     }
@@ -116,10 +112,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return COLUMNS_ROUTE;
     }
 
-    public String getCreatePreferencesTable() {
-        return CREATE_PREFERENCES_TABLE;
-    }
-
     public String getTablePreferences() {
         return TABLE_PREFERENCES;
     }
@@ -138,5 +130,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String[] getColumnPreferences() {
         return COLUMN_PREFERENCES;
+    }
+
+    public static String getTableDistance() {
+        return TABLE_DISTANCE;
+    }
+
+    public static String getDistanceKeyId() {
+        return DISTANCE_KEY_ID;
+    }
+
+    public static String getDistanceKeyUserId() {
+        return DISTANCE_KEY_USER_ID;
+    }
+
+    public static String getDistanceKeyDistance() {
+        return DISTANCE_KEY_DISTANCE;
+    }
+
+    public static String[] getColumnsDistance() {
+        return COLUMN_DISTANCE;
     }
 }
