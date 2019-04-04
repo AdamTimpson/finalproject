@@ -148,9 +148,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         List<String> routePlaces = new ArrayList<>();
 
         if(MyRoutesActivity.selectedRoute == null) {
-            selectedPlaces = NewRouteActivity.getSelectedPlaces();
+            routePlaces = NewRouteActivity.getSelectedPlaces();
         } else {
-            Toast.makeText(MapsActivity.this, MyRoutesActivity.selectedRoute.toString(), Toast.LENGTH_LONG).show();
+            String route = MyRoutesActivity.selectedRoute.getDestinations(); // {'atm', 'bank', 'bakery'}
+            route = route.replace("[", "");
+            route = route.replace("]", "");
+            route = route.replace(" " , "");
+            route = route.replace("'", ""); // atm,bank,bakery
+
+            routePlaces = Arrays.asList(route.split(","));
+
         }
 
         return routePlaces;
