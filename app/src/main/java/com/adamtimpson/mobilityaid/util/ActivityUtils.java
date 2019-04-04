@@ -7,6 +7,7 @@ import com.adamtimpson.mobilityaid.HelpActivity;
 import com.adamtimpson.mobilityaid.MainActivity;
 import com.adamtimpson.mobilityaid.MainMenuActivity;
 import com.adamtimpson.mobilityaid.MapsActivity;
+import com.adamtimpson.mobilityaid.MyRoutesActivity;
 import com.adamtimpson.mobilityaid.NewRouteActivity;
 import com.adamtimpson.mobilityaid.RegisterActivity;
 import com.adamtimpson.mobilityaid.SaveRouteActivity;
@@ -55,6 +56,10 @@ public class ActivityUtils {
 
     public void moveToSaveRoute() {
         this.context.startActivity(new Intent(this.context, SaveRouteActivity.class));
+    }
+
+    public void moveToMyRoutes() {
+        this.context.startActivity(new Intent(this.context, MyRoutesActivity.class));
     }
 
 }

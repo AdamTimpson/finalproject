@@ -9,6 +9,7 @@ import android.util.Log;
 import com.adamtimpson.mobilityaid.database.model.Route;
 import com.adamtimpson.mobilityaid.helper.DatabaseHelper;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -81,6 +82,17 @@ public class RouteEntry {
         return routes;
     }
 
+    public List<Route> getRoutesByUserId(Integer id) {
+        List<Route> routes = new ArrayList<Route>();
+        for(Route r: getAllRoutes()) {
+            if(r.getUserId() == id) {
+                routes.add(r);
+            }
+        }
+
+        return routes;
+    }
+
     public Integer updateRoute(Route route) {
         SQLiteDatabase db = dbh.getWritableDatabase();
 
@@ -96,10 +108,10 @@ public class RouteEntry {
         return result;
     }
 
-    public void deleteRoute(Route route) {
+    public void deleteRoute(Integer id) {
         SQLiteDatabase db = dbh.getWritableDatabase();
 
-        db.delete(dbh.getTableRoute(), dbh.getRouteKeyId() + " = ?", new String[] {String.valueOf(route.getId())});
+        db.delete(dbh.getTableRoute(), dbh.getRouteKeyId() + " = ?", new String[] {String.valueOf(id)});
 
         db.close();
     }

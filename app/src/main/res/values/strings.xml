@@ -16,6 +16,7 @@
     <string name="registerEmail">Email: </string>
     <string name="registerPassword">Password: </string>
     <string name="registerConfirmPassword">Confirm Password: </string>
+    <string name="routeName">Route Name: </string>
 
     <!--Buttons-->
     <string name="loginButton">Login</string>
@@ -32,6 +33,7 @@
     <string name="registerConfirmButton">Register</string>
     <string name="registerClearButton">Clear</string>
     <string name="myRoutesButton">My Routes</string>
+    <string name="saveRouteButton">Save Route</string>
 
     <!--Checkboxes-->
     <string name="orderDestinations">Order destinations from nearest to furthest? </string>

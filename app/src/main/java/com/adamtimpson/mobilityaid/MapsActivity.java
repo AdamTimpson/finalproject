@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.adamtimpson.mobilityaid.database.model.Route;
 import com.adamtimpson.mobilityaid.util.FetchURL;
 import com.adamtimpson.mobilityaid.util.TaskLoadedCallback;
 import com.android.volley.Request;
@@ -39,6 +40,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, TaskLoadedCallback {
 
@@ -56,9 +58,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private LocationManager locationManager;
 
-    private Boolean orderDestinations = NewRouteActivity.getOrderDestinations();
+    private Boolean orderDestinations = NewRouteActivity.getOrderDestinations(); // If the user wants the destinations to be ordered or not
 
-    private ArrayList<String> selectedPlaces = NewRouteActivity.getSelectedPlaces();
+    private List<String> selectedPlaces = null; // The destinations the user has chosen (as VALUES not KEYS ie book_shop not 'Book Shop')
 
     private ArrayList<LatLng> allMarkerLatLngArray = new ArrayList<>();
 
@@ -74,7 +76,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("[DEBUG] ", Arrays.toString(selectedPlaces.toArray()));
+//        Log.d("[DEBUG] ", Arrays.toString(selectedPlaces.toArray()));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
@@ -131,9 +133,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
+                selectedPlaces = getSelectedPlaces();
                 geoLocate();
             }
         }
+    }
+
+    /**
+     * Checks if the user has clicked on a route from MyRoutes
+     * if they have. then use that route. If they have not,
+     * the route to be used will be obtained from NewRoute
+     */
+    private List<String> getSelectedPlaces() {
+        List<String> routePlaces = new ArrayList<>();
+
+        if(MyRoutesActivity.selectedRoute == null) {
+            selectedPlaces = NewRouteActivity.getSelectedPlaces();
+        } else {
+            Toast.makeText(MapsActivity.this, MyRoutesActivity.selectedRoute.toString(), Toast.LENGTH_LONG).show();
+        }
+
+        return routePlaces;
     }
 
     private void geoLocate() {
@@ -213,16 +233,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         nextPointButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("[DEBUG]", getDirectionsUrl(allMarkerLatLngArray.get(0), allMarkerLatLngArray.get(1)));
 
-                if((currentIndex >= 0 && nextIndex < allMarkerLatLngArray.size()))   {
-                    new FetchURL(MapsActivity.this).execute(getDirectionsUrl(allMarkerLatLngArray.get(currentIndex), allMarkerLatLngArray.get(nextIndex)), "walking");
+//                System.out.println("PLACES: " + selectedPlaces.toString());
 
-                    currentIndex++;
-                    nextIndex++;
+                if(orderDestinations) {
+                    Toast.makeText(MapsActivity.this, "Not yet implemented...", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(MapsActivity.this, "You have no more destinations planned", Toast.LENGTH_LONG).show();
+                    if((currentIndex >= 0 && nextIndex < allMarkerLatLngArray.size()))   {
+                        new FetchURL(MapsActivity.this).execute(getDirectionsUrl(allMarkerLatLngArray.get(currentIndex), allMarkerLatLngArray.get(nextIndex)), "walking");
+
+                        currentIndex++;
+                        nextIndex++;
+                    } else {
+                        Toast.makeText(MapsActivity.this, "You have no more destinations planned", Toast.LENGTH_LONG).show();
+                    }
                 }
+
             }
         });
     }
@@ -257,16 +283,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
     }
 
-    private Double calculateDistance(LatLng p1, LatLng p2) {
-        // Lat = x, Lng = y, Distance = sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
-        Double x1 = p1.latitude;
-        Double y1 = p1.longitude;
-        Double x2 = p2.latitude;
-        Double y2 = p2.longitude;
+    private Double calculateDistance(LatLng a, LatLng b) {
+        Location aLoc = new Location("a");
+        aLoc.setLatitude(a.latitude);
+        aLoc.setLongitude(a.longitude);
 
-        Double xDiffSqr = Math.pow((x2 - x1), 2);
-        Double yDiffSqr = Math.pow((y2 - y1), 2);
+        Location bLoc = new Location("b");
+        bLoc.setLatitude(b.latitude);
+        bLoc.setLongitude(b.longitude);
 
-        return Math.sqrt(xDiffSqr + yDiffSqr);
+        return Double.valueOf(aLoc.distanceTo(bLoc));
     }
 }

@@ -39,11 +39,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_USER_TABLE);
+        sqLiteDatabase.execSQL(CREATE_ROUTE_TABLE);
+        sqLiteDatabase.execSQL(CREATE_PREFERENCES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS user");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS route");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS preferences");
 
         this.onCreate(sqLiteDatabase);
     }

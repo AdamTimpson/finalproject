@@ -4,8 +4,6 @@ import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
-import org.w3c.dom.Text;
-
 import java.util.Locale;
 
 public class VoiceUtils {
@@ -18,6 +16,7 @@ public class VoiceUtils {
     private final String WALKING_DISTANCE = "set walking distance";
     private final String NEW_ROUTE = "plan a new route";
     private final String HELP = "view help";
+    private final String MY_ROUTES = "my routes";
 
     public VoiceUtils(Context context) {
         tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
@@ -64,5 +63,9 @@ public class VoiceUtils {
 
     public String getHelp() {
         return HELP;
+    }
+
+    public String getMyRoutes() {
+        return MY_ROUTES;
     }
 }

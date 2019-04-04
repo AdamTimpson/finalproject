@@ -1,7 +1,5 @@
 package com.adamtimpson.mobilityaid;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -30,7 +28,7 @@ public class NewRouteActivity extends AppCompatActivity {
 
     public ListView placesList;
 
-    private static List<String> selectedPlaces = null;
+    private static List<String> selectedPlaces = new ArrayList<String>();
 
     private static ArrayList<String> addedPlaces = new ArrayList<String>();
 
@@ -240,8 +238,11 @@ public class NewRouteActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 //                Toast.makeText(NewRouteActivity.this, "[DEBUG] " + (PLACES_KEYS[position] + ": " + PLACES_VALUES[position]), Toast.LENGTH_LONG).show(); // Debug
+
                 addedPlaces.add(PLACES_KEYS[position]);
                 resetChosenPlacesText(addedPlaces);
+
+                selectedPlaces = getSelectedPlaces();
             }
         });
     }
@@ -257,9 +258,17 @@ public class NewRouteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.saveRouteButton: {
-                saveNewRoute(selectedPlaces); // selectedPlaces contains the VALUES not the KEYS
+                System.out.println("HERE........" + selectedPlaces.toString());
 
-                return true;
+                if(selectedPlaces.isEmpty() || selectedPlaces == null) {
+                    Toast.makeText(NewRouteActivity.this, "You need to select some places...", Toast.LENGTH_LONG).show();
+
+                    return false;
+                } else {
+                    saveNewRoute(selectedPlaces); // selectedPlaces contains the VALUES not the KEYS
+
+                    return true;
+                }
             }
         }
 
@@ -274,7 +283,7 @@ public class NewRouteActivity extends AppCompatActivity {
     }
 
     private List<String> getKeysFromValues(List<String> values) {
-        List<String> keys = null;
+        List<String> keys = new ArrayList<String>();
 
         for(String s: values) {
             if(Arrays.asList(PLACES_VALUES).contains(s)) {

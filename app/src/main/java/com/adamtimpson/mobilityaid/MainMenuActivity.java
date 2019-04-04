@@ -34,11 +34,13 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button setWalkingDistanceButton;
     private Button newRouteButton;
     private Button helpButton;
+    private Button myRoutesButton;
 
     private LinearLayout setInterestsLayout;
     private LinearLayout setWalkingDistanceLayout;
     private LinearLayout newRouteLayout;
     private LinearLayout helpLayout;
+    private LinearLayout myRoutesLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +122,8 @@ public class MainMenuActivity extends AppCompatActivity {
             activityUtils.moveToNewRoute();
         } else if(cmd.equalsIgnoreCase(voiceUtils.getHelp())) {
             activityUtils.moveToHelp();
+        } else if(cmd.equalsIgnoreCase(voiceUtils.getMyRoutes())) {
+            activityUtils.moveToMyRoutes();
         } else {
             Toast.makeText(MainMenuActivity.this, voiceUtils.getError(cmd), Toast.LENGTH_LONG).show();
         }
@@ -130,6 +134,7 @@ public class MainMenuActivity extends AppCompatActivity {
         initSetWalkingDistanceListener();
         initNewRouteListener();
         initHelpListener();
+        initMyRoutesListener();
     }
 
     private void initSetInterestsListener() {
@@ -249,6 +254,47 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View view) {
                 voiceUtils.getTts().speak(voiceUtils.getNewRoute(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
+    }
+
+    private void initMyRoutesListener() {
+        myRoutesButton = findViewById(R.id.myRoutesButton);
+        myRoutesLayout = findViewById(R.id.myRoutesLayout);
+
+        // Button click
+        myRoutesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityUtils.moveToMyRoutes();
+            }
+        });
+
+        // Layout click
+        myRoutesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityUtils.moveToMyRoutes();
+            }
+        });
+
+        // Button long click
+        myRoutesButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getMyRoutes(), voiceUtils.getQueue(), null, null);
+
+                return true;
+            }
+        });
+
+        // Layout long click
+        myRoutesLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                voiceUtils.getTts().speak(voiceUtils.getMyRoutes(), voiceUtils.getQueue(), null, null);
 
                 return true;
             }
