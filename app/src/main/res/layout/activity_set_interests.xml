@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".SetInterestsActivity">
 
+    <ListView
+        android:id="@+id/interestPlacesList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+
 </android.support.constraint.ConstraintLayout>
