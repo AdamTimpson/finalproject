@@ -23,7 +23,8 @@
         android:roundIcon="@drawable/globe_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyRoutesActivity"></activity>
+        <activity android:name=".PreferenceSettingsActivity"></activity>
+        <activity android:name=".MyRoutesActivity" />
         <activity android:name=".SaveRouteActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HelpActivity" />

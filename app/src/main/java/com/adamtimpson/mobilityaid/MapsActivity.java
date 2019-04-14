@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.adamtimpson.mobilityaid.database.entry.DistanceEntry;
+import com.adamtimpson.mobilityaid.database.entry.PreferenceEntry;
+import com.adamtimpson.mobilityaid.database.entry.UserEntry;
 import com.adamtimpson.mobilityaid.database.model.User;
 import com.adamtimpson.mobilityaid.util.FetchURL;
 import com.adamtimpson.mobilityaid.util.LogInUtils;
@@ -78,12 +80,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private User curentUser = LogInUtils.getInstance().getCurrentUser();
 
+    private UserEntry userEntry = new UserEntry(this);
+    private PreferenceEntry preferenceEntry = new PreferenceEntry(this);
     private DistanceEntry distanceEntry = new DistanceEntry(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        Log.d("[DEBUG] ", Arrays.toString(selectedPlaces.toArray()));
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
@@ -101,7 +103,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         // Enable current location
-
         // Check permission of Location - GPS
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // If the permission is not granted...
@@ -176,7 +177,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void sendVolleyRequest(final String searchString) {
-        Log.d("[DEBUG]", searchString);
+        Log.d("[DEBUG] searchString: ", searchString);
 
         String radiusString = "";
 
@@ -209,7 +210,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     Log.d("[DEBUG]", markerLatLng.toString());
 
-                    addMarker(markerLatLng, geo.getString("name"));
+                    if(userEntry.hasPreferenceSetFor(searchString)) {
+
+                        String placeLatLng = preferenceEntry.getPreferenceByPlaceType(searchString).getPlaces();
+
+                        Double placeLat = Double.parseDouble(placeLatLng.split(",")[0]);
+                        Double placeLng = Double.parseDouble(placeLatLng.split(",")[1]);
+
+                        markerLatLng = new LatLng(placeLat, placeLng);
+
+                        addMarker(markerLatLng, searchString);
+
+                    } else {
+                        addMarker(markerLatLng, geo.getString("name"));
+                    }
+
                     allMarkerLatLngArray.add(markerLatLng);
 
                 } catch(Exception e) {

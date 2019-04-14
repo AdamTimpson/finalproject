@@ -6,14 +6,16 @@ public class Preference {
     private Integer userId;
 
     private String places;
+    private String placeType;
 
     public Preference() {
 
     }
 
-    public Preference(Integer id, Integer userId, String places) {
+    public Preference(Integer id, Integer userId, String placeType, String places) {
         this.id = id;
         this.userId = userId;
+        this.placeType = placeType;
         this.places = places;
     }
 
@@ -33,6 +35,14 @@ public class Preference {
         this.userId = userId;
     }
 
+    public String getPlaceType() {
+        return placeType;
+    }
+
+    public void setPlaceType(String placeType) {
+        this.placeType = placeType;
+    }
+
     public String getPlaces() {
         return places;
     }
@@ -46,6 +56,7 @@ public class Preference {
         return "Preference{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", placeyType=" + placeType +
                 ", places='" + places + '\'' +
                 '}';
     }

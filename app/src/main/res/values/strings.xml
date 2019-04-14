@@ -18,6 +18,8 @@
     <string name="registerConfirmPassword">Confirm Password: </string>
     <string name="routeName">Route Name: </string>
     <string name="km">KM</string>
+    <string name="setInterestLabel">Choose a place-type to set your preferred destination: </string>
+    <string name="preferenceSettingsLabel">Enter a location: </string>
 
     <!--Buttons-->
     <string name="loginButton">Login</string>
@@ -35,6 +37,9 @@
     <string name="registerClearButton">Clear</string>
     <string name="myRoutesButton">My Routes</string>
     <string name="saveRouteButton">Save Route</string>
+    <string name="preferenceSettingsSaveButton">Save</string>
+    <string name="preferenceSettingsDeleteButton">Delete</string>
+    <string name="preferenceSettingsClearButton">Clear</string>
 
     <!--Checkboxes-->
     <string name="orderDestinations">Order destinations from nearest to furthest? </string>

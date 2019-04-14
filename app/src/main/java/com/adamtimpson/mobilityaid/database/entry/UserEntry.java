@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.adamtimpson.mobilityaid.database.model.Preference;
 import com.adamtimpson.mobilityaid.database.model.User;
 import com.adamtimpson.mobilityaid.helper.DatabaseHelper;
+import com.adamtimpson.mobilityaid.util.LogInUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,8 +18,11 @@ public class UserEntry {
 
     private DatabaseHelper dbh;
 
+    private PreferenceEntry preferenceEntry;
+
     public UserEntry(Context context) {
         dbh = new DatabaseHelper(context);
+        preferenceEntry = new PreferenceEntry(context);
     }
 
     public void addUser(User user) {
@@ -162,6 +167,16 @@ public class UserEntry {
         }
 
         return password;
+    }
+
+    public Boolean hasPreferenceSetFor(String placeType) {
+        for(Preference p: preferenceEntry.getPreferencesByUserId(LogInUtils.getInstance().getCurrentUser().getId())) {
+            if(p.getPlaceType().equalsIgnoreCase(placeType)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

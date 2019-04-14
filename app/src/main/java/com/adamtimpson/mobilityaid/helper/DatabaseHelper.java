@@ -10,7 +10,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private final String CREATE_USER_TABLE = "CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, email TEXT, password TEXT)";
     private final String CREATE_ROUTE_TABLE = "CREATE TABLE route(id INTEGER PRIMARY KEY AUTOINCREMENT,  userId INTEGER, name TEXT, destinations TEXT)";
-    private final String CREATE_PREFERENCES_TABLE = "CREATE TABLE preferences(id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, places TEXT)";
+    private final String CREATE_PREFERENCES_TABLE = "CREATE TABLE preferences(id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, placeType TEXt, places TEXT)";
     private final String CREATE_DISTANCE_TABLE = "CREATE TABLE distance(id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, distance INTEGER)";
 
     private static final String DATABASE_NAME = "mobility_aid";
@@ -30,8 +30,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_PREFERENCES = "preferences";
     private static final String PREFERENCES_KEY_ID = "id";
     private static final String PREFERENCES_KEY_USER_ID = "userId";
+    private static final String PREFERENCES_KEY_PLACE_TYPE= "placeType";
     private static final String PREFERENCES_KEY_PLACES = "places";
-    private static final String COLUMN_PREFERENCES[] = {PREFERENCES_KEY_ID, PREFERENCES_KEY_USER_ID, PREFERENCES_KEY_PLACES};
+    private static final String COLUMN_PREFERENCES[] = {PREFERENCES_KEY_ID, PREFERENCES_KEY_USER_ID, PREFERENCES_KEY_PLACE_TYPE, PREFERENCES_KEY_PLACES};
     private static final String TABLE_DISTANCE = "distance";
     private static final String DISTANCE_KEY_ID = "id";
     private static final String DISTANCE_KEY_USER_ID = "userId";
@@ -122,6 +123,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String getPreferencesKeyUserId() {
         return PREFERENCES_KEY_USER_ID;
+    }
+
+    public String getPreferencesKeyPlaceType() {
+        return PREFERENCES_KEY_PLACE_TYPE;
     }
 
     public String getPreferencesKeyPlaces() {

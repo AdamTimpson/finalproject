@@ -7,9 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.adamtimpson.mobilityaid.database.model.Preference;
-import com.adamtimpson.mobilityaid.database.model.Route;
 import com.adamtimpson.mobilityaid.helper.DatabaseHelper;
+import com.adamtimpson.mobilityaid.util.LogInUtils;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class PreferenceEntry {
 
         ContentValues values = new ContentValues();
         values.put(dbh.getPreferencesKeyUserId(), preference.getUserId());
+        values.put(dbh.getPreferencesKeyPlaceType(), preference.getPlaceType());
         values.put(dbh.getPreferencesKeyPlaces(), preference.getPlaces());
 
         db.insert(dbh.getTablePreferences(), null, values);
@@ -46,7 +48,8 @@ public class PreferenceEntry {
         Preference preference = new Preference();
         preference.setId(Integer.parseInt(c.getString(0)));
         preference.setUserId(Integer.parseInt(c.getString(1)));
-        preference.setPlaces(c.getString(2));
+        preference.setPlaceType(c.getString(2));
+        preference.setPlaces(c.getString(3));
 
         Log.d("[DEBUG]", preference.toString());
 
@@ -68,7 +71,8 @@ public class PreferenceEntry {
                 preference = new Preference();
                 preference.setId(Integer.parseInt(c.getString(0)));
                 preference.setUserId(Integer.parseInt(c.getString(1)));
-                preference.setPlaces(c.getString(2));
+                preference.setPlaceType(c.getString(2));
+                preference.setPlaces(c.getString(3));
 
                 preferences.add(preference);
             } while(c.moveToNext());
@@ -79,11 +83,34 @@ public class PreferenceEntry {
         return preferences;
     }
 
+    public List<Preference> getPreferencesByUserId(Integer userId) {
+        List<Preference> preferences = new ArrayList<>();
+
+        for(Preference p: getAllPreferences()) {
+            if(p.getUserId() == userId) {
+                preferences.add(p);
+            }
+        }
+
+        return preferences;
+    }
+
+    public Preference getPreferenceByPlaceType(String placeType) {
+        for(Preference p: getPreferencesByUserId(LogInUtils.getInstance().getCurrentUser().getId())) {
+            if(p.getPlaceType().equalsIgnoreCase(placeType)) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
     public Integer updatePreference(Preference preference) {
         SQLiteDatabase db = dbh.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(dbh.getRouteKeyUserId(), preference.getUserId());
+        values.put(dbh.getPreferencesKeyPlaceType(), preference.getPlaceType());
         values.put(dbh.getPreferencesKeyPlaces(), preference.getPlaces());
 
         Integer result = db.update(dbh.getTablePreferences(), values, dbh.getPreferencesKeyId() + " = ?", new String[] {String.valueOf(preference.getId())});

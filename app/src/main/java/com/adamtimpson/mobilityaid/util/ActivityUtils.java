@@ -2,6 +2,7 @@ package com.adamtimpson.mobilityaid.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.preference.Preference;
 
 import com.adamtimpson.mobilityaid.HelpActivity;
 import com.adamtimpson.mobilityaid.MainActivity;
@@ -9,6 +10,7 @@ import com.adamtimpson.mobilityaid.MainMenuActivity;
 import com.adamtimpson.mobilityaid.MapsActivity;
 import com.adamtimpson.mobilityaid.MyRoutesActivity;
 import com.adamtimpson.mobilityaid.NewRouteActivity;
+import com.adamtimpson.mobilityaid.PreferenceSettingsActivity;
 import com.adamtimpson.mobilityaid.RegisterActivity;
 import com.adamtimpson.mobilityaid.SaveRouteActivity;
 import com.adamtimpson.mobilityaid.SetInterestsActivity;
@@ -60,6 +62,10 @@ public class ActivityUtils {
 
     public void moveToMyRoutes() {
         this.context.startActivity(new Intent(this.context, MyRoutesActivity.class));
+    }
+
+    public void moveToPreferenceSettings() {
+        this.context.startActivity(new Intent(this.context, PreferenceSettingsActivity.class));
     }
 
 }

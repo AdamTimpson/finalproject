@@ -237,8 +237,6 @@ public class NewRouteActivity extends AppCompatActivity {
         placesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                Toast.makeText(NewRouteActivity.this, "[DEBUG] " + (PLACES_KEYS[position] + ": " + PLACES_VALUES[position]), Toast.LENGTH_LONG).show(); // Debug
-
                 addedPlaces.add(PLACES_KEYS[position]);
                 resetChosenPlacesText(addedPlaces);
 
