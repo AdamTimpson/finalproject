@@ -56,7 +56,7 @@ public class Preference {
         return "Preference{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", placeyType=" + placeType +
+                ", placeType=" + placeType +
                 ", places='" + places + '\'' +
                 '}';
     }

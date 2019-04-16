@@ -78,23 +78,61 @@ public class PreferenceSettingsActivity extends AppCompatActivity {
                 sendRequest(uri.toString());
                 latLng = getLatLngFromResponse(jsonResponse);
 
+                Boolean isSet = preferenceEntry.getPreferenceByPlaceType(place.split(":")[1]) != null; // If this comes back as true, then the place type has been set
+
                 if(!latLng.equalsIgnoreCase("-1")) {
                     Toast.makeText(PreferenceSettingsActivity.this, latLng, Toast.LENGTH_LONG).show();
 
-                    preferenceEntry.addPreference(new Preference(0, LogInUtils.getInstance().getCurrentUser().getId(), place.split(":")[1], latLng));
+                    if(isSet) {
+                        System.out.println("IS SET = TRUE");
+                        Integer id = preferenceEntry.getIdByPlaceType(place.split(":")[1]);
+
+                        preferenceEntry.updatePreference(new Preference(id, LogInUtils.getInstance().getCurrentUser().getId(), place.split(":")[1], latLng.replaceAll("'", "")));
+                    } else {
+                        System.out.println("IS SET = FALSE");
+                        preferenceEntry.addPreference(new Preference(0, LogInUtils.getInstance().getCurrentUser().getId(), place.split(":")[1], latLng));
+                    }
+
+                    System.out.println("PREFS: " + preferenceEntry.getAllPreferences());
 
                     activityUtils.moveToNewRoute();
 
                 } else {
                     Toast.makeText(PreferenceSettingsActivity.this, "Try again...", Toast.LENGTH_LONG).show();
                 }
-
-
             }
         });
 
         deleteButton = findViewById(R.id.preferenceSettingsDeleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inputField = findViewById(R.id.preferenceNameField);
+
+                Boolean isSet = preferenceEntry.getPreferenceByPlaceType(place.split(":")[1]) != null; // If this comes back as true, then the place type has been set
+
+                if(isSet) {
+                    System.out.println("IS SET = TRUE");
+                    Integer id = preferenceEntry.getIdByPlaceType(place.split(":")[1]);
+
+                    preferenceEntry.deletePreference(id);
+
+                    Toast.makeText(PreferenceSettingsActivity.this, "Deleted your preference for: " + place.split(":")[0], Toast.LENGTH_LONG).show();
+                    activityUtils.moveToSetInterests();
+                } else {
+                    Toast.makeText(PreferenceSettingsActivity.this, "You don't have a preference set for: " + place.split(":")[0], Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
         clearButton = findViewById(R.id.preferenceSettingsClearButton);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((EditText)(findViewById(R.id.preferenceNameField))).setText("");
+            }
+        });
 
     }
 

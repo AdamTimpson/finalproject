@@ -10,6 +10,7 @@ import com.adamtimpson.mobilityaid.database.model.Preference;
 import com.adamtimpson.mobilityaid.helper.DatabaseHelper;
 import com.adamtimpson.mobilityaid.util.LogInUtils;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -105,27 +106,55 @@ public class PreferenceEntry {
         return null;
     }
 
-    public Integer updatePreference(Preference preference) {
+    public void updatePreference(Preference preference) {
         SQLiteDatabase db = dbh.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(dbh.getRouteKeyUserId(), preference.getUserId());
-        values.put(dbh.getPreferencesKeyPlaceType(), preference.getPlaceType());
-        values.put(dbh.getPreferencesKeyPlaces(), preference.getPlaces());
+        StringBuffer sql = new StringBuffer();
+        sql.append("update ");
+        sql.append(dbh.getTablePreferences());
+        sql.append(" set ");
+        sql.append(dbh.getPreferencesKeyPlaces());
+        sql.append(" = \'");
+        sql.append(preference.getPlaces());
+        sql.append("\' where id = ");
+        sql.append(preference.getId());
 
-        Integer result = db.update(dbh.getTablePreferences(), values, dbh.getPreferencesKeyId() + " = ?", new String[] {String.valueOf(preference.getId())});
+        System.out.println("UPDATE PREFERENCE: " + sql.toString());
+
+        db.execSQL(sql.toString());
 
         db.close();
-
-        return result;
     }
 
-    public void deletePreference(Preference preference) {
+    public void deletePreference(Integer id) {
         SQLiteDatabase db = dbh.getWritableDatabase();
 
-        db.delete(dbh.getTablePreferences(), dbh.getPreferencesKeyId() + " = ?", new String[] {String.valueOf(preference.getId())});
+        db.delete(dbh.getTablePreferences(), dbh.getPreferencesKeyId() + " = ?", new String[] {String.valueOf(id)});
 
         db.close();
+    }
+
+    public Integer getIdByPlaceType(String placeType) {
+        for(Preference p: getAllPreferences()) {
+            String logInId = "" + LogInUtils.getInstance().getCurrentUser().getId();
+            String userId = "" + p.getUserId();
+
+            Boolean sameId = (logInId.equalsIgnoreCase(userId));
+            Boolean samePlaceType = ((p.getPlaceType()).equalsIgnoreCase(placeType));
+
+            System.out.println("P.PLACE TYPE: " + p.getPlaceType());
+            System.out.println("PLACE TYPE: " + placeType);
+
+            System.out.println("SAME ID: " + sameId.toString());
+            System.out.println("SAME PLACE TYPE: " + samePlaceType.toString());
+
+            if(sameId && samePlaceType) {
+                return p.getId();
+            }
+
+        }
+
+        return -1;
     }
 
 }
